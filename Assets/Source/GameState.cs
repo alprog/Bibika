@@ -12,6 +12,10 @@ public class GameState : Singleton<GameState>
 
     public void Update(float deltaTime)
     {
+        foreach (var car in Cars)
+        {
+            car.Update(deltaTime);
+        }
     }
 
     private void GenerateRandomCars(int count)

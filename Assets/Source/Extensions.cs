@@ -1,5 +1,6 @@
-using System.Reflection;
 using System;
+using System.Reflection;
+using UnityEngine;
 
 public static class Extensions
 {
@@ -17,5 +18,20 @@ public static class Extensions
     public static object InvokeDefaultConstructor(this Type type)
     {
         return type.GetDefaultConstructor().Invoke(EmptyArray<object>.Value);
+    }
+
+    public static T EnsureComponent<T>(this Component self) where T : Component
+    {
+        return self.gameObject.EnsureComponent<T>();
+    }
+
+    public static T EnsureComponent<T>(this GameObject self) where T : Component
+    {
+        T component = self.GetComponent<T>();
+        if (component == null)
+        {
+            component = self.AddComponent<T>();
+        }
+        return component;
     }
 }
